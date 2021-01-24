@@ -6,6 +6,7 @@ class AppWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: StoreScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
