@@ -18,20 +18,14 @@ class StoreScreen extends StatelessWidget {
               "assets/icons/back.svg",
               color: Colors.black87,
             ),
-            onPressed: null),
+            onPressed: () {}),
         actions: [
-          IconButton(
-              icon: SvgPicture.asset(
-                "assets/icons/search.svg",
-                color: Colors.black87,
-              ),
-              onPressed: null),
           IconButton(
               icon: SvgPicture.asset(
                 "assets/icons/cart.svg",
                 color: Colors.black87,
               ),
-              onPressed: null),
+              onPressed: () {}),
         ],
       ),
       body: Container(
