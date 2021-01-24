@@ -59,7 +59,10 @@ class StoreScreen extends StatelessWidget {
   }
 
   _updateShownItemsFor(category) {
-    if (category != null) {
-    } else {}
+    if (category == null) {
+      _itemListStateKey.currentState.fetchItems();
+    } else {
+      _itemListStateKey.currentState.fetchCategoryItems(category.title);
+    }
   }
 }

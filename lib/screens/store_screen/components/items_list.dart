@@ -64,7 +64,7 @@ class ItemsListState extends State<ItemsList> {
               Text("Some error happened, please "),
               InkWell(
                 onTap: () {
-                  _fetchItems();
+                  fetchItems();
                 },
                 child: Text(
                   "try again",
@@ -141,10 +141,16 @@ class ItemsListState extends State<ItemsList> {
   void initState() {
     super.initState();
 
-    _fetchItems();
+    fetchItems();
   }
 
-  _fetchItems() {
+  fetchItems() {
     _itemsFuture = StoreService().getItems();
+    setState(() {});
+  }
+
+  fetchCategoryItems(String category) {
+    _itemsFuture = StoreService().getCategoryItems(category);
+    setState(() {});
   }
 }
