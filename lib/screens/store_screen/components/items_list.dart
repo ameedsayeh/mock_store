@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mock_store/models/store_item.dart';
+import 'package:mock_store/screens/item_screen/item_screen.dart';
 import 'package:mock_store/services/store_service.dart';
 
 import 'item_card.dart';
@@ -26,7 +27,7 @@ class ItemsListState extends State<ItemsList> {
           } else if (snapshot.connectionState == ConnectionState.done) {
             _items = snapshot.data;
 
-            return buildGridView();
+            return buildGridView(context);
           } else {
             return buildTryAgain();
           }
@@ -35,7 +36,7 @@ class ItemsListState extends State<ItemsList> {
     );
   }
 
-  GridView buildGridView() {
+  GridView buildGridView(context) {
     return GridView.count(
       padding:
           EdgeInsets.only(right: 16.0, left: 16.0, top: 16.0, bottom: 24.0),
@@ -43,7 +44,7 @@ class ItemsListState extends State<ItemsList> {
       crossAxisSpacing: 16.0,
       childAspectRatio: 0.75,
       crossAxisCount: 2,
-      children: _items.map((e) => _itemBuilder(e)).toList(),
+      children: _items.map((e) => _itemBuilder(context, e)).toList(),
     );
   }
 
@@ -79,9 +80,18 @@ class ItemsListState extends State<ItemsList> {
     );
   }
 
-  Widget _itemBuilder(StoreItem item) {
+  Widget _itemBuilder(context, StoreItem item) {
     return ItemCard(
       item: item,
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => ItemScreen(
+              item: item,
+            ),
+          ),
+        );
+      },
     );
   }
 
