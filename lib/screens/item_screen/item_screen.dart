@@ -129,22 +129,19 @@ class ItemScreen extends StatelessWidget {
             SizedBox(
               height: 16.0,
             ),
-            InkWell(
-              onTap: () {},
-              child: Container(
-                height: 80,
-                color: Colors.black,
-                child: Center(
-                  child: SafeArea(
-                    child: TextButton(
-                      onPressed: null,
-                      child: Text(
-                        "ADD TO CART",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 20,
-                        ),
+            Container(
+              height: 80,
+              color: Colors.black,
+              child: Center(
+                child: SafeArea(
+                  child: TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      "ADD TO CART",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20,
                       ),
                     ),
                   ),
