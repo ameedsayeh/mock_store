@@ -8,7 +8,6 @@ import 'package:mock_store/screens/item_screen/components/add_to_cart_sheet.dart
 
 class ItemScreen extends StatelessWidget {
   final StoreItem item;
-
   const ItemScreen({Key key, this.item}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -26,15 +25,7 @@ class ItemScreen extends StatelessWidget {
               Navigator.pop(context);
             }),
         actions: [
-          IconButton(
-              icon: Padding(
-                padding: const EdgeInsets.all(3.0),
-                child: SvgPicture.asset(
-                  "assets/icons/heart.svg",
-                  color: Colors.black87,
-                ),
-              ),
-              onPressed: () {}),
+          AddToFavouriteButton(),
         ],
       ),
       body: Container(
@@ -165,5 +156,31 @@ class ItemScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class AddToFavouriteButton extends StatelessWidget {
+  AddToFavouriteButton({
+    Key key,
+  }) : super(key: key);
+
+  final _snackBar = SnackBar(
+    content: Text('Added to favourite list'),
+    behavior: SnackBarBehavior.floating,
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+        icon: Padding(
+          padding: const EdgeInsets.all(3.0),
+          child: SvgPicture.asset(
+            "assets/icons/heart.svg",
+            color: Colors.black87,
+          ),
+        ),
+        onPressed: () {
+          Scaffold.of(context).showSnackBar(_snackBar);
+        });
   }
 }
