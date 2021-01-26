@@ -39,8 +39,14 @@ class ItemCard extends StatelessWidget {
                   tag: "image${item.id}",
                   child: CachedNetworkImage(
                     imageUrl: item.imageURL,
-                    placeholder: (context, url) => Text("loading image"),
-                    fadeInDuration: Duration(),
+                    placeholder: (context, url) => Center(
+                      child: Text(
+                        "Loading Image",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 16),
+                      ),
+                    ),
+                    fadeInDuration: Duration(milliseconds: 100),
                     fit: BoxFit.contain,
                   ),
                 ),

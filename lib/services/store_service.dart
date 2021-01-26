@@ -57,4 +57,18 @@ class StoreService {
       return [];
     }
   }
+
+  Future<List<StoreItem>> getCartItems(String category) async {
+    final String endpointURL = _apiBaseURL + "/products/category/$category";
+
+    final response = await http.get(endpointURL);
+
+    if (response.statusCode == 200) {
+      Iterable iter = json.decode(response.body);
+
+      return List<StoreItem>.from(iter.map((obj) => StoreItem.fromJson(obj)));
+    } else {
+      return [];
+    }
+  }
 }

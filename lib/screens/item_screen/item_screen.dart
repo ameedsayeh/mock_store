@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mock_store/models/store_item.dart';
 import 'package:mock_store/extensions/string_extensions.dart';
+import 'package:mock_store/screens/item_screen/components/add_to_cart_sheet.dart';
 
 class ItemScreen extends StatelessWidget {
   final StoreItem item;
@@ -134,14 +136,25 @@ class ItemScreen extends StatelessWidget {
               color: Colors.black,
               child: Center(
                 child: SafeArea(
-                  child: TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      "ADD TO CART",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20,
+                  child: Padding(
+                    padding: EdgeInsets.zero,
+                    child: TextButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                          backgroundColor: Colors.transparent,
+                          context: context,
+                          builder: (context) => AddToCartSheet(
+                            item: item,
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "Add to cart",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                        ),
                       ),
                     ),
                   ),
