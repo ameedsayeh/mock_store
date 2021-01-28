@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mock_store/screens/cart_screen/cart_screen.dart';
 import 'package:mock_store/screens/store_screen/components/categories_list.dart';
 import 'package:mock_store/screens/store_screen/components/items_list.dart';
 
@@ -25,7 +26,13 @@ class StoreScreen extends StatelessWidget {
                 "assets/icons/cart.svg",
                 color: Colors.black87,
               ),
-              onPressed: () {}),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CartScreen(),
+                    ));
+              }),
         ],
       ),
       body: Container(
