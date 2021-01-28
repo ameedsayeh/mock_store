@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:mock_store/models/cart.dart';
 import 'package:mock_store/models/store_category.dart';
 import 'package:mock_store/models/store_item.dart';
 
@@ -58,17 +59,17 @@ class StoreService {
     }
   }
 
-  Future<List<StoreItem>> getCartItems(String category) async {
-    final String endpointURL = _apiBaseURL + "/products/category/$category";
+  Future<Cart> getCartItems(String category) async {
+    final String endpointURL = _apiBaseURL + "/carts/user/4";
 
     final response = await http.get(endpointURL);
 
-    if (response.statusCode == 200) {
-      Iterable iter = json.decode(response.body);
+    final map = json.decode(response.body);
 
-      return List<StoreItem>.from(iter.map((obj) => StoreItem.fromJson(obj)));
+    if (response.statusCode == 200) {
+      return Cart.fromJson(map);
     } else {
-      return [];
+      return null;
     }
   }
 }
