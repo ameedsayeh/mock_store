@@ -67,7 +67,7 @@ class StoreService {
     final map = json.decode(response.body);
 
     if (response.statusCode == 200) {
-      return Cart.fromJson(map);
+      return Cart.fromJson(map[0]);
     } else {
       return null;
     }
