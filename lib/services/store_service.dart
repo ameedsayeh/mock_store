@@ -72,4 +72,18 @@ class StoreService {
       return null;
     }
   }
+
+  Future<StoreItem> getItem(productID) async {
+    final String endpointURL = _apiBaseURL + "/products/$productID";
+
+    final response = await http.get(endpointURL);
+
+    final map = json.decode(response.body);
+
+    if (response.statusCode == 200) {
+      return StoreItem.fromJson(map);
+    } else {
+      return null;
+    }
+  }
 }
