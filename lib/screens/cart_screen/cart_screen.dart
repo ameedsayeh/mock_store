@@ -34,6 +34,13 @@ class CartScreen extends StatelessWidget {
                     color: Colors.black),
               ),
             ),
+            SizedBox(
+              height: 8.0,
+            ),
+            Divider(
+              height: 1,
+              thickness: 1,
+            ),
             CartItemsList(),
           ],
         ),
