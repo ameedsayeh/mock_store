@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mock_store/screens/cart_screen/cart_items_list.dart';
 
 class CartScreen extends StatelessWidget {
   @override
@@ -33,6 +34,7 @@ class CartScreen extends StatelessWidget {
                     color: Colors.black),
               ),
             ),
+            CartItemsList(),
           ],
         ),
       ),
