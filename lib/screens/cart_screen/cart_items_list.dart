@@ -19,10 +19,18 @@ class _CartItemsListState extends State<CartItemsList> {
 
   _fetchCart() async {
     _cart = await StoreService().getCartItems();
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Expanded(
+      child: ListView.builder(
+        itemCount: _cart != null ? _cart.products.length : 0,
+        itemBuilder: (context, index) => ListTile(
+          title: Text(_cart.products[index].productId.toString()),
+        ),
+      ),
+    );
   }
 }
