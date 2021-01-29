@@ -10,7 +10,7 @@ class Cart {
     return Cart(
       id: map['id'],
       userId: map['userId'],
-      date: map['date'],
+      date: DateTime.parse(map['date']),
       products: List<CartProduct>.from(
         map['products'].map(
           (p) => CartProduct.fromJson(p),
