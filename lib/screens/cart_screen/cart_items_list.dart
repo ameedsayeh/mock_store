@@ -56,6 +56,19 @@ class _CartItemsListState extends State<CartItemsList> {
                   item.description,
                   maxLines: 4,
                 ),
+                trailing: Column(
+                  children: [
+                    Text(
+                      "X ${_cart.products[index].quantity}",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Spacer(),
+                    Text(
+                      "${item.price} \$",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
               );
             } else if (snapshot.connectionState == ConnectionState.waiting) {
               return LinearProgressIndicator();
