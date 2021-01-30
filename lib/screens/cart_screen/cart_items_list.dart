@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mock_store/models/cart.dart';
 import 'package:mock_store/models/store_item.dart';
+import 'package:mock_store/screens/item_screen/item_screen.dart';
 import 'package:mock_store/services/store_service.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -78,70 +79,90 @@ class _CartItemsListState extends State<CartItemsList> {
           if (snapshot.connectionState == ConnectionState.done &&
               snapshot.hasData) {
             final item = snapshot.data as StoreItem;
-
-            return ListTile(
-              contentPadding: EdgeInsets.all(16.0),
-              leading: SizedBox(
-                width: 100,
-                height: 100,
-                child: CachedNetworkImage(
-                  imageUrl: item.imageURL,
-                  placeholder: (context, url) => Text("loading image"),
-                  fadeInDuration: Duration(),
-                  fit: BoxFit.contain,
-                ),
-              ),
-              title: Text(
-                item.title,
-                maxLines: 2,
-              ),
-              subtitle: Text(
-                item.description,
-                maxLines: 4,
-              ),
-              trailing: Column(
-                children: [
-                  Text(
-                    "X ${_cart.products[index].quantity}",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Spacer(),
-                  Text(
-                    "${item.price} \$",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            );
+            return buildListTile(context, item, index);
           } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return ListTile(
-              contentPadding: EdgeInsets.all(16.0),
-              leading: Shimmer.fromColors(
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  color: Colors.grey[300],
-                ),
-                baseColor: Colors.grey[300],
-                highlightColor: Colors.grey[350],
-              ),
-              title: Shimmer.fromColors(
-                child: Text("⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️\n⬜️⬜️⬜️⬜️⬜️⬜️⬜️"),
-                baseColor: Colors.grey[300],
-                highlightColor: Colors.grey[350],
-              ),
-              subtitle: Shimmer.fromColors(
-                child: Text("⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️\n⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️"),
-                baseColor: Colors.grey[300],
-                highlightColor: Colors.grey[350],
-              ),
-            );
+            return buildShimmerTile();
           } else {
             return ListTile(
               title: Text("Cannot Fetch Item"),
             );
           }
         },
+      ),
+    );
+  }
+
+  ListTile buildListTile(BuildContext context, StoreItem item, int index) {
+    return ListTile(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ItemScreen(
+              item: item,
+            ),
+          ),
+        );
+      },
+      contentPadding: EdgeInsets.all(16.0),
+      leading: SizedBox(
+        width: 100,
+        height: 100,
+        child: Hero(
+          tag: "image${item.id}",
+          child: CachedNetworkImage(
+            imageUrl: item.imageURL,
+            placeholder: (context, url) => Text("loading image"),
+            fadeInDuration: Duration(),
+            fit: BoxFit.contain,
+          ),
+        ),
+      ),
+      title: Text(
+        item.title,
+        maxLines: 2,
+      ),
+      subtitle: Text(
+        item.description,
+        maxLines: 4,
+      ),
+      trailing: Column(
+        children: [
+          Text(
+            "X ${_cart.products[index].quantity}",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          Spacer(),
+          Text(
+            "${item.price} \$",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
+    );
+  }
+
+  ListTile buildShimmerTile() {
+    return ListTile(
+      contentPadding: EdgeInsets.all(16.0),
+      leading: Shimmer.fromColors(
+        child: Container(
+          width: 100,
+          height: 100,
+          color: Colors.grey[300],
+        ),
+        baseColor: Colors.grey[300],
+        highlightColor: Colors.grey[350],
+      ),
+      title: Shimmer.fromColors(
+        child: Text("⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️\n⬜️⬜️⬜️⬜️⬜️⬜️⬜️"),
+        baseColor: Colors.grey[300],
+        highlightColor: Colors.grey[350],
+      ),
+      subtitle: Shimmer.fromColors(
+        child: Text("⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️\n⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️"),
+        baseColor: Colors.grey[300],
+        highlightColor: Colors.grey[350],
       ),
     );
   }
