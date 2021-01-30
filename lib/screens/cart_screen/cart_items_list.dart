@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mock_store/models/cart.dart';
 import 'package:mock_store/models/store_item.dart';
 import 'package:mock_store/services/store_service.dart';
+import 'package:shimmer/shimmer.dart';
 
 class CartItemsList extends StatefulWidget {
   @override
@@ -113,7 +114,28 @@ class _CartItemsListState extends State<CartItemsList> {
               ),
             );
           } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return LinearProgressIndicator();
+            return ListTile(
+              contentPadding: EdgeInsets.all(16.0),
+              leading: Shimmer.fromColors(
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  color: Colors.grey[300],
+                ),
+                baseColor: Colors.grey[300],
+                highlightColor: Colors.grey[350],
+              ),
+              title: Shimmer.fromColors(
+                child: Text("⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️\n⬜️⬜️⬜️⬜️⬜️⬜️⬜️"),
+                baseColor: Colors.grey[300],
+                highlightColor: Colors.grey[350],
+              ),
+              subtitle: Shimmer.fromColors(
+                child: Text("⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️\n⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️"),
+                baseColor: Colors.grey[300],
+                highlightColor: Colors.grey[350],
+              ),
+            );
           } else {
             return ListTile(
               title: Text("Cannot Fetch Item"),

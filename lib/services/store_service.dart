@@ -60,7 +60,7 @@ class StoreService {
   }
 
   Future<Cart> getCartItems() async {
-    final String endpointURL = _apiBaseURL + "/carts/user/4";
+    final String endpointURL = _apiBaseURL + "/carts/user/1";
 
     final response = await http.get(endpointURL);
 
