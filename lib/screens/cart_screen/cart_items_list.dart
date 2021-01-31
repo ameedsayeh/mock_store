@@ -79,7 +79,7 @@ class _CartItemsListState extends State<CartItemsList> {
           if (snapshot.connectionState == ConnectionState.done &&
               snapshot.hasData) {
             final item = snapshot.data as StoreItem;
-            return buildListTile(context, item, index);
+            return buildListTile(item, _cart.products[index].quantity);
           } else if (snapshot.connectionState == ConnectionState.waiting) {
             return buildShimmerTile();
           } else {
@@ -92,7 +92,55 @@ class _CartItemsListState extends State<CartItemsList> {
     );
   }
 
-  ListTile buildListTile(BuildContext context, StoreItem item, int index) {
+  Widget buildListTile(StoreItem item, int quantity) {
+    return CartItem(
+      item: item,
+      quantity: quantity,
+    );
+  }
+
+  ListTile buildShimmerTile() {
+    return ListTile(
+      contentPadding: EdgeInsets.all(16.0),
+      leading: Shimmer.fromColors(
+        child: Container(
+          width: 100,
+          height: 100,
+          color: Colors.grey[300],
+        ),
+        baseColor: Colors.grey[300],
+        highlightColor: Colors.grey[350],
+      ),
+      title: Shimmer.fromColors(
+        child: Text("⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️\n⬜️⬜️⬜️⬜️⬜️⬜️⬜️"),
+        baseColor: Colors.grey[300],
+        highlightColor: Colors.grey[350],
+      ),
+      subtitle: Shimmer.fromColors(
+        child: Text("⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️\n⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️"),
+        baseColor: Colors.grey[300],
+        highlightColor: Colors.grey[350],
+      ),
+    );
+  }
+
+  _fetchItem(productID) async {
+    return StoreService().getItem(productID);
+  }
+}
+
+class CartItem extends StatelessWidget {
+  final StoreItem item;
+  final int quantity;
+
+  const CartItem({Key key, this.item, this.quantity}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return buildListTile(context);
+  }
+
+  ListTile buildListTile(BuildContext context) {
     return ListTile(
       onTap: () {
         Navigator.push(
@@ -126,48 +174,74 @@ class _CartItemsListState extends State<CartItemsList> {
         item.description,
         maxLines: 4,
       ),
-      trailing: Column(
+    );
+  }
+}
+
+class QuantitySelector extends StatefulWidget {
+  final int initialQuantity;
+
+  const QuantitySelector({Key key, this.initialQuantity}) : super(key: key);
+  @override
+  _QuantitySelectorState createState() => _QuantitySelectorState();
+}
+
+class _QuantitySelectorState extends State<QuantitySelector> {
+  int _quantity;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 50,
+      height: 50,
+      child: Row(
         children: [
-          Text(
-            "X ${_cart.products[index].quantity}",
-            style: TextStyle(fontWeight: FontWeight.bold),
+          FlatButton(
+            onPressed: () {
+              if (widget.initialQuantity > 1) {
+                setState(() {
+                  _quantity -= 1;
+                });
+              }
+            },
+            child: Text(
+              '-',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            shape: CircleBorder(),
+            color: Colors.black87,
           ),
-          Spacer(),
-          Text(
-            "${item.price} \$",
-            style: TextStyle(fontWeight: FontWeight.bold),
+          Center(
+            child: Text(
+              _quantity.toString(),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+          ),
+          FlatButton(
+            onPressed: () {
+              if (_quantity < 99) {
+                setState(() {
+                  _quantity += 1;
+                });
+              }
+            },
+            child: Text(
+              '+',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            shape: CircleBorder(),
+            color: Colors.black87,
           ),
         ],
       ),
     );
-  }
-
-  ListTile buildShimmerTile() {
-    return ListTile(
-      contentPadding: EdgeInsets.all(16.0),
-      leading: Shimmer.fromColors(
-        child: Container(
-          width: 100,
-          height: 100,
-          color: Colors.grey[300],
-        ),
-        baseColor: Colors.grey[300],
-        highlightColor: Colors.grey[350],
-      ),
-      title: Shimmer.fromColors(
-        child: Text("⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️\n⬜️⬜️⬜️⬜️⬜️⬜️⬜️"),
-        baseColor: Colors.grey[300],
-        highlightColor: Colors.grey[350],
-      ),
-      subtitle: Shimmer.fromColors(
-        child: Text("⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️\n⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️"),
-        baseColor: Colors.grey[300],
-        highlightColor: Colors.grey[350],
-      ),
-    );
-  }
-
-  _fetchItem(productID) async {
-    return StoreService().getItem(productID);
   }
 }
