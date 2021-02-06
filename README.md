@@ -12,4 +12,5 @@ Thanks to [FakeStore API](https://fakestoreapi.com/) for providing a mock API th
 
 ## Demo
 
-![](mock_store_demo.gif)
+![](demo1.gif)
+![](demo2.gif)
